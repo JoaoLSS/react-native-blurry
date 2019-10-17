@@ -16,7 +16,6 @@ public class BlurryPackage implements ReactPackage {
         return Arrays.<NativeModule>asList(new BlurryModule(reactContext));
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return null;
     }
