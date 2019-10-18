@@ -2,6 +2,7 @@ package com.reactlibrary;
 
 import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -44,12 +45,21 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
 
     @ReactProp(name="visible")
     public void setBlurred(ReactImageView view, boolean visible) {
-        if(visible) Blurry.with(mContext)
-                .radius(mRadius)
-                .sampling(mSampling)
-                .async()
-                .capture(BlurryModule.mModule.getActivity().getCurrentFocus())
-                .into(view);
+        if(visible) {
+            View focusedView = BlurryModule.mModule.getActivity().getCurrentFocus();
+            if(focusedView==null) {
+                Log.d("BLURRY", "no view found");
+                return;
+            }
+            else {
+                Blurry.with(mContext)
+                        .radius(mRadius)
+                        .sampling(mSampling)
+                        .async()
+                        .capture(focusedView)
+                        .into(view);
+            }
+        }
     }
 
     @ReactProp(name="radius")
