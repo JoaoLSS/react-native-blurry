@@ -40,7 +40,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     @Nonnull
     @Override
     protected ReactImageView createViewInstance(@Nonnull ThemedReactContext reactContext) {
-        return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, null);
+        return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, mContext);
     }
 
     @ReactProp(name="visible")
