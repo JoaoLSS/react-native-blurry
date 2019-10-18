@@ -1,5 +1,7 @@
 package com.reactlibrary;
 
+import android.app.Activity;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -12,6 +14,7 @@ public class BlurryModule extends ReactContextBaseJavaModule {
     public BlurryModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        BlurryViewManager.someActivity = getCurrentActivity();
     }
 
     @Override
@@ -19,9 +22,4 @@ public class BlurryModule extends ReactContextBaseJavaModule {
         return "Blurry";
     }
 
-    @ReactMethod
-    public void sampleMethod(String stringArgument, int numberArgument, Callback callback) {
-        // TODO: Implement some actually useful functionality
-        callback.invoke("Received numberArgument: " + numberArgument + " stringArgument: " + stringArgument);
-    }
 }

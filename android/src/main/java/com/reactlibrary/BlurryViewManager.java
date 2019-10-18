@@ -1,7 +1,11 @@
 package com.reactlibrary;
 
+import android.app.Activity;
+import android.app.Application;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
@@ -14,6 +18,7 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     private static final String REACT_CLASS = "RCTBlurView";
     private final ReactApplicationContext mContext;
+    public static Activity someActivity;
     private int mRadius = 20;
     private int mSampling = 1;
 
@@ -33,12 +38,12 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     @ReactProp(name="visible")
     public void setBlurred(ReactViewGroup view, boolean visible) {
-        if(visible) Blurry.with(mContext)
-                .radius(mRadius)
-                .sampling(mSampling)
+        Blurry.with(someActivity)
+                .radius(25)
+                .sampling(2)
                 .async()
+                .animate(500)
                 .onto(view);
-        else view = new ReactViewGroup(mContext);
     }
 
     @ReactProp(name="radius")
