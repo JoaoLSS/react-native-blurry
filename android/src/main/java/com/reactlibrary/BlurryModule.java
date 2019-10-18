@@ -11,15 +11,21 @@ public class BlurryModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
+    public static BlurryModule mModule;
+
     public BlurryModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        BlurryViewManager.someActivity = getCurrentActivity();
+        BlurryModule.mModule = this;
     }
 
     @Override
     public String getName() {
         return "Blurry";
+    }
+
+    public Activity getActivity() {
+        return getCurrentActivity();
     }
 
 }

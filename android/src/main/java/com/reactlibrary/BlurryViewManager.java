@@ -18,7 +18,6 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     private static final String REACT_CLASS = "RCTBlurView";
     private final ReactApplicationContext mContext;
-    public static Activity someActivity;
     private int mRadius = 20;
     private int mSampling = 1;
 
@@ -38,7 +37,7 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     @ReactProp(name="visible")
     public void setBlurred(ReactViewGroup view, boolean visible) {
-        Blurry.with(someActivity)
+        Blurry.with(BlurryModule.mModule.getActivity())
                 .radius(25)
                 .sampling(2)
                 .async()
