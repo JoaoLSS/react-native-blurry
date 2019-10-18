@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -51,6 +52,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             return;
         }
         else {
+            Blurry.delete((ViewGroup) focusedView);
             Blurry.with(mContext)
                     .radius(mRadius)
                     .sampling(mSampling)
