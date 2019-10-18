@@ -12,6 +12,8 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.views.view.ReactViewGroup;
 
+import javax.annotation.Nonnull;
+
 import jp.wasabeef.blurry.Blurry;
 
 public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
@@ -25,21 +27,23 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
         this.mContext = reactContext;
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return REACT_CLASS;
     }
 
+    @Nonnull
     @Override
-    protected ReactViewGroup createViewInstance(ThemedReactContext reactContext) {
+    protected ReactViewGroup createViewInstance(@Nonnull ThemedReactContext reactContext) {
         return new ReactViewGroup(reactContext);
     }
 
     @ReactProp(name="visible")
     public void setBlurred(ReactViewGroup view, boolean visible) {
-        if(visible) Blurry.with(BlurryModule.mModule.getActivity())
-                .radius(25)
-                .sampling(2)
+        if(visible) Blurry.with(mContext)
+                .radius(mRadius)
+                .sampling(mSampling)
                 .async()
                 .animate(500)
                 .onto(view);
