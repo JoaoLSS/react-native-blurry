@@ -28,6 +28,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private int mRadius = 20;
     private int mSampling = 1;
     private boolean mVisible = false;
+    private boolean mBlurred = false;
 
     BlurryViewManager(ReactApplicationContext reactContext) {
         this.mContext = reactContext;
@@ -52,31 +53,46 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             return;
         }
         else {
-            Blurry.delete((ViewGroup) focusedView);
             Blurry.with(mContext)
                     .radius(mRadius)
                     .sampling(mSampling)
                     .async()
                     .capture(focusedView)
                     .into(view);
+            mBlurred = true;
+        }
+    }
+
+    public void unsetBlurred(ReactImageView view) {
+        View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        if(focusedView==null) {
+            Log.d("BLURRY", "no view found");
+            return;
+        }
+        else {
+            Blurry.delete((ViewGroup) focusedView);
+            mBlurred = false;
         }
     }
 
     @ReactProp(name="radius")
     public void setRadius(ReactImageView view, int radius) {
         this.mRadius = radius;
-        setBlurred(view);
+        if(!mBlurred) setBlurred(view);
+        else {
+            unsetBlurred(view);
+            setBlurred(view);
+        }
     }
 
     @ReactProp(name="sampling")
     public void setSampling(ReactImageView view, int sampling) {
         this.mSampling = sampling;
-        setBlurred(view);
+        if(!mBlurred) setBlurred(view);
+        else {
+            unsetBlurred(view);
+            setBlurred(view);
+        }
     }
 
-    @ReactProp(name="visible")
-    public void setVisible(ReactImageView view, boolean visible) {
-        this.mVisible = visible;
-        setBlurred(view);
-    }
 }
