@@ -28,32 +28,26 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     @Override
     protected ReactViewGroup createViewInstance(ThemedReactContext reactContext) {
-        ReactViewGroup view = new ReactViewGroup(reactContext);
-        Blurry.with(mContext)
-                .radius(mRadius)
-                .sampling(mSampling)
-                .async()
-                .onto(view);
-        return view;
+        return new ReactViewGroup(reactContext);
     }
 
-    private void setBlurred(ReactViewGroup view) {
-        Blurry.with(mContext)
+    @ReactProp(name="visible")
+    private void setBlurred(ReactViewGroup view, boolean visible) {
+        if(visible) Blurry.with(mContext)
                 .radius(mRadius)
                 .sampling(mSampling)
                 .async()
                 .onto(view);
+        else view = new ReactViewGroup(mContext);
     }
 
     @ReactProp(name="radius")
     public void setRadius(ReactViewGroup view, int radius) {
         this.mRadius = radius;
-        this.setBlurred(view);
     }
 
     @ReactProp(name="sampling")
     public void setSampling(ReactViewGroup view, int sampling) {
         this.mSampling = sampling;
-        this.setBlurred(view);
     }
 }
