@@ -2,6 +2,8 @@ package com.reactlibrary;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private int mRadius = 20;
     private int mSampling = 1;
     private boolean mVisible = false;
-    private boolean mBlurred = false;
+    private Bitmap bitmap;
 
     BlurryViewManager(ReactApplicationContext reactContext) {
         this.mContext = reactContext;
@@ -46,31 +48,34 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, mContext);
     }
 
-    public void setBlurred(ReactImageView view) {
-        View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        if(focusedView==null) {
-            Log.d("BLURRY", "no view found");
-            return;
-        }
-        else {
+    private void setBlurred(ReactImageView view) {
+        try {
+            if(bitmap==null) {
+                View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                if(focusedView!=null) {
+                    bitmap = Bitmap.createBitmap(focusedView.getWidth(),focusedView.getHeight(),Bitmap.Config.ARGB_8888);
+                    final Canvas c = new Canvas(bitmap);
+                    view.draw(c);
+                }
+            }
             Blurry.with(mContext)
                     .radius(mRadius)
                     .sampling(mSampling)
-                    .capture(focusedView)
+                    .from(bitmap)
                     .into(view);
-            mBlurred = true;
+        }
+        catch(Exception ignored) {
+
         }
     }
 
-    public void unsetBlurred(ReactImageView view) {
-        View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        if(focusedView==null) {
-            Log.d("BLURRY", "no view found");
-            return;
-        }
-        else {
-            Blurry.delete((ViewGroup) focusedView);
-            mBlurred = false;
+    private void unsetBlurred(ReactImageView view) {
+        if(bitmap!=null) {
+            View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+            if(focusedView!=null) {
+                Blurry.delete((ViewGroup)focusedView);
+                bitmap = null;
+            }
         }
     }
 
