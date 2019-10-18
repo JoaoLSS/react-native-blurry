@@ -53,14 +53,13 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(ReactImageView view) {
         try {
             if(bitmap==null) {
-                return;
-//                View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-//                if(focusedView!=null) {
-//                    focusedView.setDrawingCacheEnabled(true);
-//                    focusedView.destroyDrawingCache();
-//                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-//                    bitmap = focusedView.getDrawingCache();
-//                }
+                View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                if(focusedView!=null) {
+                    focusedView.setDrawingCacheEnabled(true);
+                    focusedView.destroyDrawingCache();
+                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+                    bitmap = focusedView.getDrawingCache();
+                }
             }
             Blurry.with(mContext)
                     .radius(mRadius)
