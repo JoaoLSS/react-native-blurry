@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +99,17 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         this.mVisible = visible;
         if(visible) setBlurred(view);
         else unsetBlurred(view);
+    }
+
+    @ReactProp(name="source")
+    public void setSource(ReactImageView view, String uri) {
+        Uri imageUri = Uri.parse(uri);
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(BlurryModule.mModule.getActivity().getContentResolver(), imageUri);
+        }
+        catch (Exception ignored) {
+
+        }
     }
 
 }
