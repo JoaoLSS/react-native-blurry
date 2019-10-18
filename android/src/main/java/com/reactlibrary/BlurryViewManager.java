@@ -37,12 +37,13 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     @ReactProp(name="visible")
     public void setBlurred(ReactViewGroup view, boolean visible) {
-        Blurry.with(BlurryModule.mModule.getActivity())
+        if(visible) Blurry.with(BlurryModule.mModule.getActivity())
                 .radius(25)
                 .sampling(2)
                 .async()
                 .animate(500)
                 .onto(view);
+        else Blurry.delete(view);
     }
 
     @ReactProp(name="radius")
