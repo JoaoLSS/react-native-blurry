@@ -53,9 +53,10 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             if(bitmap==null) {
                 View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
                 if(focusedView!=null) {
-                    bitmap = Bitmap.createBitmap(focusedView.getWidth(),focusedView.getHeight(),Bitmap.Config.ARGB_8888);
-                    final Canvas c = new Canvas(bitmap);
-                    view.draw(c);
+                    focusedView.setDrawingCacheEnabled(true);
+                    focusedView.destroyDrawingCache();
+                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+                    bitmap = focusedView.getDrawingCache();
                 }
             }
             Blurry.with(mContext)
