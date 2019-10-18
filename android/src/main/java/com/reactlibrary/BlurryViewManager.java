@@ -48,7 +48,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 .radius(mRadius)
                 .sampling(mSampling)
                 .async()
-                .capture(BlurryModule.mModule.getActivity().findViewById(R.id.content))
+                .capture(BlurryModule.mModule.getActivity().getCurrentFocus())
                 .into(view);
     }
 
