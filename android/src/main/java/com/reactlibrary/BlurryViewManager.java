@@ -5,18 +5,21 @@ import android.app.Application;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.views.image.ReactImageView;
 import com.facebook.react.views.view.ReactViewGroup;
 
 import javax.annotation.Nonnull;
 
 import jp.wasabeef.blurry.Blurry;
 
-public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
+public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
 
     private static final String REACT_CLASS = "RCTBlurView";
     private final ReactApplicationContext mContext;
@@ -35,28 +38,27 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
 
     @Nonnull
     @Override
-    protected ReactViewGroup createViewInstance(@Nonnull ThemedReactContext reactContext) {
-        return new ReactViewGroup(reactContext);
+    protected ReactImageView createViewInstance(@Nonnull ThemedReactContext reactContext) {
+        return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, null);
     }
 
     @ReactProp(name="visible")
-    public void setBlurred(ReactViewGroup view, boolean visible) {
+    public void setBlurred(ReactImageView view, boolean visible) {
         if(visible) Blurry.with(mContext)
                 .radius(mRadius)
                 .sampling(mSampling)
                 .async()
-                .animate(500)
-                .onto(view);
-        else Blurry.delete(view);
+                .capture(BlurryModule.mModule.getActivity().findViewById(R.id.content))
+                .into(view);
     }
 
     @ReactProp(name="radius")
-    public void setRadius(ReactViewGroup view, int radius) {
+    public void setRadius(ReactImageView view, int radius) {
         this.mRadius = radius;
     }
 
     @ReactProp(name="sampling")
-    public void setSampling(ReactViewGroup view, int sampling) {
+    public void setSampling(ReactImageView view, int sampling) {
         this.mSampling = sampling;
     }
 }
