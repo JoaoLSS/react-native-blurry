@@ -56,7 +56,6 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             Blurry.with(mContext)
                     .radius(mRadius)
                     .sampling(mSampling)
-                    .async()
                     .capture(focusedView)
                     .into(view);
             mBlurred = true;
