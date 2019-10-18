@@ -26,6 +26,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private final ReactApplicationContext mContext;
     private int mRadius = 20;
     private int mSampling = 1;
+    private boolean mVisible = false;
 
     BlurryViewManager(ReactApplicationContext reactContext) {
         this.mContext = reactContext;
@@ -43,32 +44,37 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, mContext);
     }
 
-    @ReactProp(name="visible")
-    public void setBlurred(ReactImageView view, boolean visible) {
-        if(visible) {
-            View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-            if(focusedView==null) {
-                Log.d("BLURRY", "no view found");
-                return;
-            }
-            else {
-                Blurry.with(mContext)
-                        .radius(mRadius)
-                        .sampling(mSampling)
-                        .async()
-                        .capture(focusedView)
-                        .into(view);
-            }
+    public void setBlurred(ReactImageView view) {
+        View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        if(focusedView==null) {
+            Log.d("BLURRY", "no view found");
+            return;
+        }
+        else {
+            Blurry.with(mContext)
+                    .radius(mRadius)
+                    .sampling(mSampling)
+                    .async()
+                    .capture(focusedView)
+                    .into(view);
         }
     }
 
     @ReactProp(name="radius")
     public void setRadius(ReactImageView view, int radius) {
         this.mRadius = radius;
+        setBlurred(view);
     }
 
     @ReactProp(name="sampling")
     public void setSampling(ReactImageView view, int sampling) {
         this.mSampling = sampling;
+        setBlurred(view);
+    }
+
+    @ReactProp(name="visible")
+    public void setVisible(ReactImageView view, boolean visible) {
+        this.mVisible = visible;
+        setBlurred(view);
     }
 }
