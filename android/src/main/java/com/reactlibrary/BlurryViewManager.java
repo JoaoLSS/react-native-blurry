@@ -78,21 +78,20 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     @ReactProp(name="radius")
     public void setRadius(ReactImageView view, int radius) {
         this.mRadius = radius;
-        if(!mBlurred) setBlurred(view);
-        else {
-            unsetBlurred(view);
-            setBlurred(view);
-        }
+        if(mVisible) setBlurred(view);
     }
 
     @ReactProp(name="sampling")
     public void setSampling(ReactImageView view, int sampling) {
         this.mSampling = sampling;
-        if(!mBlurred) setBlurred(view);
-        else {
-            unsetBlurred(view);
-            setBlurred(view);
-        }
+        if(mVisible) setBlurred(view);
+    }
+
+    @ReactProp(name="visible")
+    public void setVisible(ReactImageView view, boolean visible) {
+        this.mVisible = visible;
+        if(visible) setBlurred(view);
+        else unsetBlurred(view);
     }
 
 }
