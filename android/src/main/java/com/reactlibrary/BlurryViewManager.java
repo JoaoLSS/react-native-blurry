@@ -46,19 +46,12 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     @ReactProp(name="visible")
     public void setBlurred(ReactImageView view, boolean visible) {
         if(visible) {
-            View focusedView = BlurryModule.mModule.getActivity().getCurrentFocus();
-            if(focusedView==null) {
-                Log.d("BLURRY", "no view found");
-                return;
-            }
-            else {
-                Blurry.with(mContext)
-                        .radius(mRadius)
-                        .sampling(mSampling)
-                        .async()
-                        .capture(focusedView)
-                        .into(view);
-            }
+            Blurry.with(mContext)
+                    .radius(mRadius)
+                    .sampling(mSampling)
+                    .async()
+                    .capture(view)
+                    .into(view);
         }
     }
 
