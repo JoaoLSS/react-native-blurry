@@ -32,7 +32,7 @@ public class BlurryViewManager extends ViewGroupManager<ReactViewGroup> {
     }
 
     @ReactProp(name="visible")
-    private void setBlurred(ReactViewGroup view, boolean visible) {
+    public void setBlurred(ReactViewGroup view, boolean visible) {
         if(visible) Blurry.with(mContext)
                 .radius(mRadius)
                 .sampling(mSampling)
