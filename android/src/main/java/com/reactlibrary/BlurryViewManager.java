@@ -63,11 +63,37 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                     PixelCopy.request(focusedWindow, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                         @Override
                         public void onPixelCopyFinished(int i) {
-                            Blurry.with(mContext)
-                                    .radius(mRadius)
-                                    .sampling(mSampling)
-                                    .from(bitmap)
-                                    .into(view);
+                            switch (i) {
+                                case PixelCopy.ERROR_DESTINATION_INVALID: {
+                                    Log.d("RNBLURRY", "ERROR_DESTINATION_INVALID");
+                                    break;
+                                }
+                                case PixelCopy.ERROR_SOURCE_INVALID: {
+                                    Log.d("RNBLURRY", "ERROR_SOURCE_INVALID");
+                                    break;
+                                }
+                                case PixelCopy.ERROR_SOURCE_NO_DATA: {
+                                    Log.d("RNBLURRY", "ERROR_SOURCE_NO_DATA");
+                                    break;
+                                }
+                                case PixelCopy.ERROR_TIMEOUT: {
+                                    Log.d("RNBLURRY", "ERROR_TIMEOUT");
+                                    break;
+                                }
+                                case PixelCopy.ERROR_UNKNOWN: {
+                                    Log.d("RNBLURRY", "ERROR_UNKNOWN");
+                                    break;
+                                }
+                                case PixelCopy.SUCCESS: {
+                                    Log.d("RNBLURRY", "SUCCESS");
+                                    Blurry.with(mContext)
+                                        .radius(mRadius)
+                                        .sampling(mSampling)
+                                        .from(bitmap)
+                                        .into(view);
+                                    break;
+                                }
+                            }
                         }
                     }, new Handler(new Handler.Callback() {
                         @Override
