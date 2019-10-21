@@ -29,10 +29,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private int mRadius = 20;
     private int mSampling = 1;
     private boolean mVisible = false;
-    private int mAlpha = 255;
-    private int mRed = 0;
-    private int mGreen = 0;
-    private int mBlue = 0;
+    private String mColor = "black";
     private Bitmap bitmap;
 
     BlurryViewManager(ReactApplicationContext reactContext) {
@@ -54,7 +51,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(ReactImageView view) {
         try {
             Blurry.with(mContext)
-                    .color(Color.argb(mAlpha, mRed, mGreen, mBlue))
+                    .color(Color.parseColor(mColor))
                     .radius(mRadius)
                     .sampling(mSampling)
                     .from(bitmap)
@@ -77,27 +74,9 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         if(mVisible) setBlurred(view);
     }
 
-    @ReactProp(name="alpha")
-    public void setAlpha(ReactImageView view, int alpha) {
-        mAlpha = alpha;
-        if(mVisible) setBlurred(view);
-    }
-
-    @ReactProp(name="red")
-    public void setRed(ReactImageView view, int red) {
-        mRed = red;
-        if(mVisible) setBlurred(view);
-    }
-
-    @ReactProp(name = "green")
-    public void setGreen(ReactImageView view, int green) {
-        mGreen = green;
-        if(mVisible) setBlurred(view);
-    }
-
-    @ReactProp(name = "blue")
-    public void setBlue(ReactImageView view, int blue) {
-        mBlue = blue;
+    @ReactProp(name="color")
+    public void setColor(ReactImageView view, String color) {
+        mColor = color;
         if(mVisible) setBlurred(view);
     }
 
