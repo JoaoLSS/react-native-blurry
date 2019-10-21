@@ -63,6 +63,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 Rect rectangle = new Rect();
                 Window window = BlurryModule.mModule.getActivity().getWindow();
                 window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                Log.d("RNBLURRY", rectangle.toString());
                 bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() + rectangle.top, Bitmap.Config.ARGB_8888);
                 Log.d("RNBLURRY", "taking screenshot");
                 PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
