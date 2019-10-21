@@ -84,6 +84,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     @ReactProp(name="visible")
     public void setVisible(final ReactImageView view, boolean visible) {
         if(visible && !mVisible) {
+            Log.d("RNBLURRY", "overlay is visible, getting screenshot");
             final Rect rect = new Rect();
             Window window = BlurryModule.mModule.getActivity().getWindow();
             window.getDecorView().getWindowVisibleDisplayFrame(rect);
