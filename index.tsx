@@ -17,7 +17,7 @@ export const BlurOverlay = (props: {
     visible: boolean
     source ?: string
     overlayColor ?: string
-    chlildren: React.ReactChildren
+    children: React.ReactChildren
 }) => {
 
     return (
@@ -30,7 +30,7 @@ export const BlurOverlay = (props: {
                 source={props.source}
                 overlayColor={props.overlayColor}
             >
-                { props.chlildren }
+                { props.children }
             </RCTBlurView>
         </View>
     )
