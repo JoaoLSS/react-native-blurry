@@ -61,7 +61,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(final ReactImageView view) {
         try {
             if(bitmap==null) {
-                Rect rectangle = new Rect();
+                final Rect rectangle = new Rect();
                 Window window = BlurryModule.mModule.getActivity().getWindow();
                 window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
                 bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() + window.getDecorView().getRootWindowInsets().getStableInsetBottom(), Bitmap.Config.ARGB_8888);
@@ -93,6 +93,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                             }
                             case PixelCopy.SUCCESS: {
                                 Log.d("RNBLURRY", "SUCCESS");
+                                bitmap.reconfigure(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
                                 Blurry.with(mContext)
                                         .radius(mRadius)
                                         .sampling(mSampling)
