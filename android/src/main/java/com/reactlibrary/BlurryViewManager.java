@@ -29,7 +29,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private int mRadius = 20;
     private int mSampling = 1;
     private boolean mVisible = false;
-    private String mColor = "black";
+    private String mColor = "#00000000";
     private Bitmap bitmap;
 
     BlurryViewManager(ReactApplicationContext reactContext) {
@@ -74,7 +74,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         if(mVisible) setBlurred(view);
     }
 
-    @ReactProp(name="color")
+    @ReactProp(name="overlayColor")
     public void setColor(ReactImageView view, String color) {
         mColor = color;
         if(mVisible) setBlurred(view);

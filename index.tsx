@@ -7,14 +7,14 @@ const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementCon
     sampling: number,
     visible: boolean,
     source ?: string,
-    color ?: string,
+    overlayColor ?: string,
 }>
 
 export const BlurOverlay = (props: {
     radius: number
     sampling: number
     source ?: string
-    colorOverlay ?: string
+    overlayColor ?: string
 }) => {
 
     const [visible, setVisible] = useState(false)
@@ -32,7 +32,7 @@ export const BlurOverlay = (props: {
                 sampling={props.sampling}
                 visible={visible && !props.source}
                 source={props.source}
-                color={props.colorOverlay}
+                overlayColor={props.overlayColor}
             />
         </View>
     )
