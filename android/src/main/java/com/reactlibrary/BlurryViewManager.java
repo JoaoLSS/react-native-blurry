@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
@@ -95,6 +96,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                                 Log.d("RNBLURRY", "SUCCESS");
                                 bitmap.reconfigure(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
                                 Blurry.with(mContext)
+                                        .color(Color.argb(100, 0, 0, 0))
                                         .radius(mRadius)
                                         .sampling(mSampling)
                                         .from(bitmap)
