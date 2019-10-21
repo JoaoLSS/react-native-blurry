@@ -63,6 +63,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                     PixelCopy.request(focusedWindow, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                         @Override
                         public void onPixelCopyFinished(int i) {
+                            Log.d("RNBLURRY", "COPY FINISHED");
                             switch (i) {
                                 case PixelCopy.ERROR_DESTINATION_INVALID: {
                                     Log.d("RNBLURRY", "ERROR_DESTINATION_INVALID");
