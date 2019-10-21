@@ -107,8 +107,8 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             }
 
         }
-        catch(Exception ignored) {
-
+        catch(Exception e) {
+            Log.d("RNBLURRY", e.getMessage());
         }
     }
 
