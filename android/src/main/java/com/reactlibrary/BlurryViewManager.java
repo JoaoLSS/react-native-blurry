@@ -96,7 +96,6 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                             }
                             case PixelCopy.SUCCESS: {
                                 Log.d("RNBLURRY", "SUCCESS");
-                                view.setBackground(new BitmapDrawable(mContext.getResources(), bitmap));
                                 bitmap.reconfigure(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
                                 Blurry.with(mContext)
                                         .color(Color.argb(100, 0, 0, 0))
