@@ -65,7 +65,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
                 int statusBarHeight = (int) Math.ceil(25 * mContext.getResources().getDisplayMetrics().density);
                 Log.d("RNBLURRY", "" + statusBarHeight);
-                bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() + rectangle.top, Bitmap.Config.ARGB_8888);
+                bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
                 Log.d("RNBLURRY", "taking screenshot");
                 PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                     @Override
