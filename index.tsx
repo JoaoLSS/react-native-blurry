@@ -8,6 +8,7 @@ const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementCon
     visible: boolean,
     source ?: string,
     overlayColor ?: string,
+    children: React.ReactChildren
 }>
 
 export const BlurOverlay = (props: {
@@ -16,6 +17,7 @@ export const BlurOverlay = (props: {
     visible: boolean
     source ?: string
     overlayColor ?: string
+    chlildren: React.ReactChildren
 }) => {
 
     return (
@@ -27,7 +29,9 @@ export const BlurOverlay = (props: {
                 visible={props.visible && !props.source}
                 source={props.source}
                 overlayColor={props.overlayColor}
-            />
+            >
+                { props.chlildren }
+            </RCTBlurView>
         </View>
     )
 
