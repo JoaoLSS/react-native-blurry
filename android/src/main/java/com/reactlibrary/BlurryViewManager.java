@@ -55,6 +55,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             if(bitmap==null) {
                 View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
                 if(focusedView!=null) {
+                    Log.d("RNBLURRY", "taking screenshot");
                     focusedView.setDrawingCacheEnabled(true);
                     focusedView.destroyDrawingCache();
                     focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
