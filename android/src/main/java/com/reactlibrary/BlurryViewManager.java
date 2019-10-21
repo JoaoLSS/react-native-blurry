@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -63,9 +64,9 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 Rect rectangle = new Rect();
                 Window window = BlurryModule.mModule.getActivity().getWindow();
                 window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-                int statusBarHeight = (int) Math.ceil(25 * mContext.getResources().getDisplayMetrics().density);
-                Log.d("RNBLURRY", window.getDecorView().getRootWindowInsets().toString());
-                bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
+                WindowInsets insets = window.getDecorView().getRootWindowInsets();
+                Log.d("RNBLURRY", "bottom "+insets.getStableInsetBottom()+" top "+insets.getStableInsetTop());
+                bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height() , Bitmap.Config.ARGB_8888);
                 Log.d("RNBLURRY", "taking screenshot");
                 PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                     @Override
