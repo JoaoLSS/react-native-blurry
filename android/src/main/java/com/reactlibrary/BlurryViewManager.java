@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -94,6 +96,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                             }
                             case PixelCopy.SUCCESS: {
                                 Log.d("RNBLURRY", "SUCCESS");
+                                view.setBackground(new BitmapDrawable(mContext.getResources(), bitmap));
                                 bitmap.reconfigure(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
                                 Blurry.with(mContext)
                                         .color(Color.argb(100, 0, 0, 0))
