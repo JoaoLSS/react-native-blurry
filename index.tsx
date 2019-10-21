@@ -7,8 +7,7 @@ const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementCon
     sampling: number,
     visible: boolean,
     source ?: string,
-    overlayColor ?: string,
-    children: React.ReactNode
+    overlayColor ?: string
 }>
 
 export const BlurOverlay = (props: {
@@ -23,15 +22,14 @@ export const BlurOverlay = (props: {
     return (
         <View style={{ backgroundColor: "transparent" }}>
             <RCTBlurView
-                style={{ width: Dimensions.get("screen").width, height: Dimensions.get("screen").height }}
+                style={{ width: Dimensions.get("screen").width, height: Dimensions.get("screen").height, position: "absolute" }}
                 radius={props.radius}
                 sampling={props.sampling}
                 visible={props.visible && !props.source}
                 source={props.source}
                 overlayColor={props.overlayColor}
-            >
-                { props.children }
-            </RCTBlurView>
+            />
+            { props.children }
         </View>
     )
 
