@@ -59,7 +59,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         try {
             if(bitmap==null) {
                 Window window = BlurryModule.mModule.getActivity().getWindow();
-                SurfaceView _view = window.getDecorView().findViewById(android.R.id.content);
+                View _view = window.getDecorView().findViewById(android.R.id.content);
                 if(_view!=null) {
                     bitmap = Bitmap.createBitmap(_view.getWidth(), _view.getHeight(), Bitmap.Config.ARGB_8888);
                     Log.d("RNBLURRY", "taking screenshot");
