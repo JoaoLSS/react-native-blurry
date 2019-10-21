@@ -13,7 +13,7 @@ export const BlurOverlay = (props: {
     return (
         <View style={{ backgroundColor: "yellow" }}>
             <RCTBlurView
-                style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height }}
+                style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height, backgroundColor: "transparent" }}
                 radius={props.radius}
                 sampling={props.sampling}
                 visible={props.visible}
