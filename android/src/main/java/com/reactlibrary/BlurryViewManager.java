@@ -10,6 +10,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.PixelCopy;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -57,10 +58,11 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(final ReactImageView view) {
         try {
             if(bitmap==null) {
-                Window focusedWindow = BlurryModule.mModule.getActivity().getWindow();
-                if(focusedWindow!=null) {
+                SurfaceView _view = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                if(_view!=null) {
+                    bitmap = Bitmap.createBitmap(_view.getWidth(), _view.getHeight(), Bitmap.Config.ARGB_8888);
                     Log.d("RNBLURRY", "taking screenshot");
-                    PixelCopy.request(focusedWindow, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
+                    PixelCopy.request(_view, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                         @Override
                         public void onPixelCopyFinished(int i) {
                             Log.d("RNBLURRY", "COPY FINISHED");
