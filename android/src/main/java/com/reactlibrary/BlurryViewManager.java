@@ -58,11 +58,12 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(final ReactImageView view) {
         try {
             if(bitmap==null) {
-                SurfaceView _view = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+                Window window = BlurryModule.mModule.getActivity().getWindow();
+                SurfaceView _view = window.getDecorView().findViewById(android.R.id.content);
                 if(_view!=null) {
                     bitmap = Bitmap.createBitmap(_view.getWidth(), _view.getHeight(), Bitmap.Config.ARGB_8888);
                     Log.d("RNBLURRY", "taking screenshot");
-                    PixelCopy.request(_view, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
+                    PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                         @Override
                         public void onPixelCopyFinished(int i) {
                             Log.d("RNBLURRY", "COPY FINISHED");
