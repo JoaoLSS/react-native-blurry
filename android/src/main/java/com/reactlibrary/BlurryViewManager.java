@@ -57,7 +57,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 if(focusedView!=null) {
                     focusedView.setDrawingCacheEnabled(true);
                     focusedView.destroyDrawingCache();
-                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                     bitmap = focusedView.getDrawingCache();
                 }
             }
