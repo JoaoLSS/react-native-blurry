@@ -108,7 +108,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             }));
         }
         else if(!visible) {
-            bitmap = null;
+            bitmap.recycle();
             this.mVisible = false;
         }
     }
