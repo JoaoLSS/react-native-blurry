@@ -98,7 +98,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                                 Log.d("RNBLURRY", "SUCCESS");
                                 bitmap.reconfigure(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
                                 Blurry.with(mContext)
-                                        .color(Color.argb(100, 0, 0, 0))
+                                        .color(Color.argb(200, 0, 0, 0))
                                         .radius(mRadius)
                                         .sampling(mSampling)
                                         .from(bitmap)
