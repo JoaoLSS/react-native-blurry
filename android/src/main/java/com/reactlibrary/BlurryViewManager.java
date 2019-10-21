@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.PixelCopy;
+import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,55 +60,54 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     private void setBlurred(final ReactImageView view) {
         try {
             if(bitmap==null) {
+                Rect rectangle = new Rect();
                 Window window = BlurryModule.mModule.getActivity().getWindow();
-                View _view = window.getDecorView().findViewById(android.R.id.content);
-                if(_view!=null) {
-                    bitmap = Bitmap.createBitmap(_view.getWidth(), _view.getHeight(), Bitmap.Config.ARGB_8888);
-                    Log.d("RNBLURRY", "taking screenshot");
-                    PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
-                        @Override
-                        public void onPixelCopyFinished(int i) {
-                            Log.d("RNBLURRY", "COPY FINISHED");
-                            switch (i) {
-                                case PixelCopy.ERROR_DESTINATION_INVALID: {
-                                    Log.d("RNBLURRY", "ERROR_DESTINATION_INVALID");
-                                    break;
-                                }
-                                case PixelCopy.ERROR_SOURCE_INVALID: {
-                                    Log.d("RNBLURRY", "ERROR_SOURCE_INVALID");
-                                    break;
-                                }
-                                case PixelCopy.ERROR_SOURCE_NO_DATA: {
-                                    Log.d("RNBLURRY", "ERROR_SOURCE_NO_DATA");
-                                    break;
-                                }
-                                case PixelCopy.ERROR_TIMEOUT: {
-                                    Log.d("RNBLURRY", "ERROR_TIMEOUT");
-                                    break;
-                                }
-                                case PixelCopy.ERROR_UNKNOWN: {
-                                    Log.d("RNBLURRY", "ERROR_UNKNOWN");
-                                    break;
-                                }
-                                case PixelCopy.SUCCESS: {
-                                    Log.d("RNBLURRY", "SUCCESS");
-                                    Blurry.with(mContext)
+                window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+                bitmap = Bitmap.createBitmap(rectangle.width(), rectangle.height(), Bitmap.Config.ARGB_8888);
+                Log.d("RNBLURRY", "taking screenshot");
+                PixelCopy.request(window, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
+                    @Override
+                    public void onPixelCopyFinished(int i) {
+                        Log.d("RNBLURRY", "COPY FINISHED");
+                        switch (i) {
+                            case PixelCopy.ERROR_DESTINATION_INVALID: {
+                                Log.d("RNBLURRY", "ERROR_DESTINATION_INVALID");
+                                break;
+                            }
+                            case PixelCopy.ERROR_SOURCE_INVALID: {
+                                Log.d("RNBLURRY", "ERROR_SOURCE_INVALID");
+                                break;
+                            }
+                            case PixelCopy.ERROR_SOURCE_NO_DATA: {
+                                Log.d("RNBLURRY", "ERROR_SOURCE_NO_DATA");
+                                break;
+                            }
+                            case PixelCopy.ERROR_TIMEOUT: {
+                                Log.d("RNBLURRY", "ERROR_TIMEOUT");
+                                break;
+                            }
+                            case PixelCopy.ERROR_UNKNOWN: {
+                                Log.d("RNBLURRY", "ERROR_UNKNOWN");
+                                break;
+                            }
+                            case PixelCopy.SUCCESS: {
+                                Log.d("RNBLURRY", "SUCCESS");
+                                Blurry.with(mContext)
                                         .radius(mRadius)
                                         .sampling(mSampling)
                                         .from(bitmap)
                                         .into(view);
-                                    break;
-                                }
+                                break;
                             }
                         }
-                    }, new Handler(new Handler.Callback() {
-                        @Override
-                        public boolean handleMessage(Message message) {
-                            Log.d("PIXEL.COPY", message.toString());
-                            return false;
-                        }
-                    }));
-                }
+                    }
+                }, new Handler(new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(Message message) {
+                        Log.d("PIXEL.COPY", message.toString());
+                        return false;
+                    }
+                }));
             }
 
         }
