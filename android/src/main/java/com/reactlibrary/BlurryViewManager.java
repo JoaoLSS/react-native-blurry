@@ -77,6 +77,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
     @ReactProp(name="overlayColor")
     public void setColor(ReactImageView view, String color) {
         mColor = color;
+        Log.d("RNBLURRY", "color " + color);
         if(mVisible) setBlurred(view);
     }
 
