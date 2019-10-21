@@ -5,10 +5,14 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -50,23 +54,31 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, mContext);
     }
 
-    private void setBlurred(ReactImageView view) {
+    private void setBlurred(final ReactImageView view) {
         try {
             if(bitmap==null) {
-                View focusedView = BlurryModule.mModule.getActivity().getWindow().getDecorView().findViewById(android.R.id.content).getRootView();
-                if(focusedView!=null) {
+                Window focusedWindow = BlurryModule.mModule.getActivity().getWindow();
+                if(focusedWindow!=null) {
                     Log.d("RNBLURRY", "taking screenshot");
-                    focusedView.setDrawingCacheEnabled(true);
-                    focusedView.destroyDrawingCache();
-                    focusedView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-                    bitmap = focusedView.getDrawingCache();
+                    PixelCopy.request(focusedWindow, bitmap, new PixelCopy.OnPixelCopyFinishedListener() {
+                        @Override
+                        public void onPixelCopyFinished(int i) {
+                            Blurry.with(mContext)
+                                    .radius(mRadius)
+                                    .sampling(mSampling)
+                                    .from(bitmap)
+                                    .into(view);
+                        }
+                    }, new Handler(new Handler.Callback() {
+                        @Override
+                        public boolean handleMessage(Message message) {
+                            Log.d("PIXEL.COPY", message.toString());
+                            return false;
+                        }
+                    }));
                 }
             }
-            Blurry.with(mContext)
-                    .radius(mRadius)
-                    .sampling(mSampling)
-                    .from(bitmap)
-                    .into(view);
+
         }
         catch(Exception ignored) {
 
