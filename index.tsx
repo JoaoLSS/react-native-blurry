@@ -23,15 +23,17 @@ export const BlurOverlay = (props: {
 
     const [reallyVisible, setReallyVisible] = useState(false)
 
+    const { width, height } = Dimensions.get("window")
+
     useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", (visible) => {
         console.log({ visible })
         setReallyVisible(visible)
     }).remove, [])
 
     return (
-        <View style={{ backgroundColor: "transparent", width: Dimensions.get("window").width, height: Dimensions.get("window").height }}>
+        <View style={{ backgroundColor: "transparent" }}>
             <RCTBlurView
-                style={{ position: "absolute", top: 0, left: 0 }}
+                style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
                 sampling={props.sampling}
                 visible={props.visible && !props.source}
