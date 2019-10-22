@@ -21,7 +21,10 @@ export const BlurOverlay = (props: {
 
     const [reallyVisible, setReallyVisible] = useState(false)
 
-    useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove, [])
+    useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", (visible) => {
+        console.log({ visible })
+        setReallyVisible(visible)
+    }).remove, [])
 
     return (
         <View style={{ backgroundColor: "transparent", width: Dimensions.get("screen").width, height: Dimensions.get("screen").height }}>
