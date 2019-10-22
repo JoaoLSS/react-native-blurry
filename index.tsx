@@ -29,7 +29,7 @@ export const BlurOverlay = (props: {
     }).remove, [])
 
     return (
-        <View style={{ backgroundColor: "transparent", width: Dimensions.get("screen").width, height: Dimensions.get("screen").height - StatusBar.currentHeight }}>
+        <View style={{ backgroundColor: "transparent", width: Dimensions.get("window").width, height: Dimensions.get("window").height }}>
             <RCTBlurView
                 style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }}
                 radius={props.radius}
