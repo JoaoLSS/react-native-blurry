@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { requireNativeComponent, ViewProps, Dimensions, View } from 'react-native';
+import { requireNativeComponent, ViewProps, Dimensions, View, NativeAppEventEmitter } from 'react-native';
 import { captureScreen } from "react-native-view-shot"
 
 const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementConstructor<ViewProps & {
@@ -19,6 +19,10 @@ export const BlurOverlay = (props: {
     children: React.ReactNode
 }) => {
 
+    const [reallyVisible, setReallyVisible] = useState(false)
+
+    useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove, [])
+
     return (
         <View style={{ backgroundColor: "transparent", width: Dimensions.get("screen").width, height: Dimensions.get("screen").height }}>
             <RCTBlurView
@@ -29,7 +33,7 @@ export const BlurOverlay = (props: {
                 source={props.source}
                 overlayColor={props.overlayColor}
             />
-            { props.visible ? props.children : null }
+            { reallyVisible ? props.children : null }
         </View>
     )
 

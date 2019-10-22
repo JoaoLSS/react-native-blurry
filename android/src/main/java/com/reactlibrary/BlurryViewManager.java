@@ -12,7 +12,10 @@ import android.view.PixelCopy;
 import android.view.Window;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -98,6 +101,8 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
                         setBlurred(view);
                         mVisible = true;
+                        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("RNBLURRY", true);
                     }
                 }
             }, new Handler(new Handler.Callback() {
@@ -112,6 +117,8 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             if(bitmap != null) bitmap.recycle();
             view.setImageDrawable(null);
             this.mVisible = false;
+            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("RNBLURRY", false);
         }
     }
 
