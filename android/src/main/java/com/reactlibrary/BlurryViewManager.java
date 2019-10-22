@@ -107,7 +107,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                     if(i==PixelCopy.SUCCESS) {
                         unscaledBitmap.reconfigure(rect.width(), rect.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
-                        view.setBackground(new BitmapDrawable(mContext.getResources(), bitmap));
+                        view.setBackground(new BitmapDrawable(mContext.getResources(), unscaledBitmap));
                         setBlurred(view);
                         mVisible = true;
                         mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", true);
