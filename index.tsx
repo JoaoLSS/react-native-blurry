@@ -16,7 +16,7 @@ export const BlurOverlay = (props: {
     visible: boolean
     source ?: string
     overlayColor ?: string
-    children: React.ReactNode
+    children ?: React.ReactNode
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
@@ -25,8 +25,6 @@ export const BlurOverlay = (props: {
         console.log({ visible })
         setReallyVisible(visible)
     }).remove, [])
-
-    // useEffect(() => !props.visible && setReallyVisible(false), [props.visible])
 
     return (
         <View style={{ backgroundColor: "transparent", width: Dimensions.get("screen").width, height: Dimensions.get("screen").height }}>
