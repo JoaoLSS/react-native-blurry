@@ -106,6 +106,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                         unscaledBitmap.reconfigure(rect.width(), rect.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
                         view.setImageBitmap(bitmap);
+                        view.setBlurRadius(20);
                         view.forceLayout();
 //                        setBlurred(view);
                         mVisible = true;
