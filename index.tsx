@@ -26,7 +26,7 @@ export const BlurOverlay = (props: {
         setReallyVisible(visible)
     }).remove, [])
 
-    useEffect(() => !props.visible && setReallyVisible(false), [props.visible])
+    // useEffect(() => !props.visible && setReallyVisible(false), [props.visible])
 
     return (
         <View style={{ backgroundColor: "transparent", width: Dimensions.get("screen").width, height: Dimensions.get("screen").height }}>
