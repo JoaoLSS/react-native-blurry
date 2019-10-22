@@ -29,7 +29,7 @@ export const BlurOverlay = (props: {
                 source={props.source}
                 overlayColor={props.overlayColor}
             />
-            { props.children }
+            { props.visible ? props.children : null }
         </View>
     )
 
