@@ -51,43 +51,43 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         return new ReactImageView(reactContext, Fresco.newDraweeControllerBuilder(), null, mContext);
     }
 
-//    private void setBlurred(ReactImageView view) {
-//        try {
-//            Blurry.with(mContext)
-//                    .color(Color.parseColor(mColor))
-//                    .radius(mRadius)
-//                    .sampling(mSampling)
-//                    .animate()
-//                    .from(bitmap)
-//                    .into(view);
-//        }
-//        catch(Exception e) {
-//            Log.d("RNBLURRY", e.getMessage());
-//        }
-//    }
+    private void setBlurred(ReactImageView view) {
+        try {
+            Blurry.with(mContext)
+                    .color(Color.parseColor(mColor))
+                    .radius(mRadius)
+                    .sampling(mSampling)
+                    .animate()
+                    .from(bitmap)
+                    .into(view);
+        }
+        catch(Exception e) {
+            Log.d("RNBLURRY", e.getMessage());
+        }
+    }
 
-//    @ReactProp(name="radius")
-//    public void setRadius(ReactImageView view, int radius) {
-//        this.mRadius = radius;
-////        if(mVisible) setBlurred(view);
-//    }
-//
-//    @ReactProp(name="sampling")
-//    public void setSampling(ReactImageView view, int sampling) {
-//        this.mSampling = sampling;
-////        if(mVisible) setBlurred(view);
-//    }
-//
-//    @ReactProp(name="overlayColor")
-//    public void setColor(ReactImageView view, String color) {
-//        mColor = color;
-////        if(mVisible) setBlurred(view);
-//    }
+    @ReactProp(name="radius")
+    public void setRadius(ReactImageView view, int radius) {
+        this.mRadius = radius;
+        if(mVisible) setBlurred(view);
+    }
 
-//    @ReactProp(name = "alpha")
-//    public void setAlpha(ReactImageView view, int alpha) {
-//        view.set
-//    }
+    @ReactProp(name="sampling")
+    public void setSampling(ReactImageView view, int sampling) {
+        this.mSampling = sampling;
+        if(mVisible) setBlurred(view);
+    }
+
+    @ReactProp(name="overlayColor")
+    public void setColor(ReactImageView view, String color) {
+        mColor = color;
+        if(mVisible) setBlurred(view);
+    }
+
+    @ReactProp(name="alpha")
+    public void setAlpha(ReactImageView view, int alpha) {
+        view.setImageAlpha(alpha);
+    }
 
     @ReactProp(name="visible")
     public void setVisible(final ReactImageView view, boolean visible) {
@@ -105,12 +105,9 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                     if(i==PixelCopy.SUCCESS) {
                         unscaledBitmap.reconfigure(rect.width(), rect.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
-                        view.setImageBitmap(bitmap);
-                        view.setBlurRadius(20);
-                        view.maybeUpdateView();
-//                        setBlurred(view);
+                        setBlurred(view);
                         mVisible = true;
-//                        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", true);
+                        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", true);
                     }
                 }
             }, new Handler(new Handler.Callback() {
@@ -122,9 +119,9 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             }));
         }
         else if(!visible) {
-//            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", false);
+            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", false);
             if(bitmap != null) bitmap.recycle();
-            view.setImageBitmap(null);
+            view.setImageDrawable(null);
             this.mVisible = false;
         }
     }
