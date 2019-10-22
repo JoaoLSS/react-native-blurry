@@ -10,7 +10,7 @@ export const BlurOverlay = (props: Omit<ImageProps,"source"> & { visible: boolea
 
     return (
         <View style={{ backgroundColor: "transparent", width, height }}>
-            <RCTBlurView {...props}/>
+            <RCTBlurView style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }} {...props}/>
         </View>
     )
 
