@@ -89,12 +89,13 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             Window window = BlurryModule.mModule.getActivity().getWindow();
             window.getDecorView().getWindowVisibleDisplayFrame(rect);
             int navBarHeight = window.getDecorView().getRootWindowInsets().getStableInsetBottom();
-            final Bitmap unscaledBitmap = Bitmap.createBitmap(rect.width(), rect.height() + navBarHeight, Bitmap.Config.ARGB_8888);
+            final int statusBarHeight = window.getDecorView().getRootWindowInsets().getStableInsetTop();
+            final Bitmap unscaledBitmap = Bitmap.createBitmap(rect.width(), rect.height() + navBarHeight + statusBarHeight, Bitmap.Config.ARGB_8888);
             PixelCopy.request(window, unscaledBitmap, new PixelCopy.OnPixelCopyFinishedListener() {
                 @Override
                 public void onPixelCopyFinished(int i) {
                     if(i==PixelCopy.SUCCESS) {
-//                        unscaledBitmap.reconfigure(rect.width(), rect.height(), Bitmap.Config.ARGB_8888);
+                        unscaledBitmap.reconfigure(rect.width(), rect.height() + statusBarHeight, Bitmap.Config.ARGB_8888);
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
                         setBlurred(view);
                         mVisible = true;
