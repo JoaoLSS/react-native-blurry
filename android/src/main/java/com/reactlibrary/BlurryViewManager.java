@@ -122,7 +122,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
         else if(!visible) {
 //            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", false);
             if(bitmap != null) bitmap.recycle();
-            view.setImageDrawable(null);
+            view.setImageBitmap(null);
             this.mVisible = false;
         }
     }
