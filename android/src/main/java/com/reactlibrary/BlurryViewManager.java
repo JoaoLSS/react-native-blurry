@@ -57,6 +57,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                     .color(Color.parseColor(mColor))
                     .radius(mRadius)
                     .sampling(mSampling)
+                    .animate()
                     .from(bitmap)
                     .into(view);
         }
@@ -101,8 +102,7 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                         bitmap = Bitmap.createBitmap(unscaledBitmap);
                         setBlurred(view);
                         mVisible = true;
-                        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("RNBLURRY", true);
+                        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", true);
                     }
                 }
             }, new Handler(new Handler.Callback() {
@@ -114,11 +114,10 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
             }));
         }
         else if(!visible) {
+            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RNBLURRY", false);
             if(bitmap != null) bitmap.recycle();
             view.setImageDrawable(null);
             this.mVisible = false;
-            mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("RNBLURRY", false);
         }
     }
 
