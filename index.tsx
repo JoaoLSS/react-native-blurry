@@ -34,7 +34,10 @@ export const BlurOverlay = (props: {
         }
     }, [])
 
-    useEffect(() => setVisible(props.visible),[props.visible])
+    useEffect(() => {
+        setVisible(props.visible)
+        console.log({ visible, animate: props.animate })
+    },[props.visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
