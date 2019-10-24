@@ -18,6 +18,7 @@ export const BlurOverlay = (props: {
     sampling: number
     children ?: React.ReactNode
     animate: Reanimated.Node<number>
+    overlayColor: string
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
@@ -77,12 +78,16 @@ export const BlurOverlay = (props: {
                     viewType={reallyVisible ? "blur" : null}
                 />
             </Reanimated.View>
-            {   reallyVisible ?
-                <View style={[{ flex: 1 }, props.style]}>
-                    {props.children}
-                </View>
-                : null
-            }
+            <Reanimated.View
+                style={[{
+                    width: "100%",
+                    height: "110%",
+                    backgroundColor: props.overlayColor,
+                    opacity: opacity.current,
+                }, props.style]}
+            >
+                { reallyVisible ? props.children : null }
+            </Reanimated.View>
         </View>
     )
 
