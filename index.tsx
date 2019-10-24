@@ -34,6 +34,7 @@ export const BlurOverlay = (props: {
         const subs = NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible)
         return () => {
             BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
+            BlurOverlay.realProgress = new Reanimated.Node<number>({})
             subs.remove()
         }
     }, [])
