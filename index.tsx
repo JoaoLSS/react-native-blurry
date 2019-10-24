@@ -51,5 +51,9 @@ export const BlurOverlay = (props: {
 }
 
 BlurOverlay.visible = false
-BlurOverlay.setVisible = (v: boolean) => BlurOverlay.visible = v
+BlurOverlay.setVisible = (v: boolean) => {
+    console.log(`setVisible`, v)
+    BlurOverlay.visible = v
+    console.log({ setted: BlurOverlay.visible })
+}
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
