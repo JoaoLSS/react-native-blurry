@@ -36,7 +36,9 @@ export const BlurOverlay = (props: {
         }
     }, [])
 
-    useCode(call([props.animate],([anim]) => {
+    useCode(call([props.animate, reallyVisibleOpacity.current],([anim, opacity]) => {
+
+        console.log({ opacity })
 
         if(anim && !visible) setVisible(true)
         if(!anim) setVisible(false)
