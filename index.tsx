@@ -48,7 +48,7 @@ export const BlurOverlay = (props: {
                 visible={visible}
                 viewType={reallyVisible ? "background" : null}
             />
-            <Reanimated.View style={{ opacity: props.animate, position: "absolute", top: 0, left: 0 }}>
+            <Reanimated.View style={{ backgroundColor: "blue", opacity: props.animate, position: "absolute", top: 0, left: 0 }}>
                 <RCTBlurView
                     style={{ width, height }}
                     radius={props.radius}
