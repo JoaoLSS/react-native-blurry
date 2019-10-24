@@ -55,7 +55,7 @@ export const BlurOverlay = (props: {
 
             const config = {
                 toValue: new Value(1),
-                duration: 300,
+                duration: 1000,
                 easing: Easing.inOut(Easing.cubic),
             }
 
