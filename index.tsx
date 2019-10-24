@@ -82,7 +82,6 @@ export const BlurOverlay = (props: {
                 style={[{
                     width: "100%",
                     height: "110%",
-                    backgroundColor: props.overlayColor,
                     opacity: props.animate,
                 }, props.style]}
             >
