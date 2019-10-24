@@ -26,6 +26,7 @@ export const BlurOverlay = (props: {
 
 
     useEffect(() => {
+        console.log(`first effect`)
         BlurOverlay.setVisible = (v: boolean) => {
             console.log(`state`)
             setVisible(v)
