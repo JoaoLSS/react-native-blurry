@@ -119,7 +119,6 @@ public class BlurryViewManager extends SimpleViewManager<ReactImageView> {
                 Blurry.with(mContext)
                         .radius(mRadius)
                         .sampling(mSampling)
-                        .animate()
                         .from(bitmap)
                         .into(view);
             }

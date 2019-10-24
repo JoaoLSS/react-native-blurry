@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle } from 'react-native'
-import Reanimated from "react-native-reanimated"
+import React, { useEffect, useState, useRef } from "react"
+import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle, Animated } from 'react-native'
+import Reanimated, { Easing } from "react-native-reanimated"
 
+const { useCode, call, min, Value, timing, Clock } = Reanimated
 
 const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementConstructor<ViewProps & {
     radius: number,
@@ -15,15 +16,16 @@ export const BlurOverlay = (props: {
     style?: StyleProp<ViewStyle>
     radius: number
     sampling: number
-    visible: boolean
     children ?: React.ReactNode
-    animate: Reanimated.Node<any>
+    animate: Reanimated.Node<number>
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
-    const [visible, setVisible] = useState(props.visible)
+    const [visible, setVisible] = useState(false)
     const { width, height } = Dimensions.get("window")
 
+    const reallyVisibleOpacity = useRef(new Value(0))
+    const opacity = useRef(min(reallyVisibleOpacity.current, props.animate))
 
     useEffect(() => {
         BlurOverlay.setVisible = setVisible
@@ -34,7 +36,27 @@ export const BlurOverlay = (props: {
         }
     }, [])
 
-    useEffect(() => setVisible(props.visible),[props.visible])
+    useCode(call([props.animate],([anim]) => {
+
+        if(anim && !visible) setVisible(true)
+        if(!anim) setVisible(false)
+
+    }), [props.animate])
+
+    useEffect(() => {
+        if(visible) {
+
+            const clock = new Clock()
+
+            const config = {
+                toValue: new Value(1),
+                duration: 300,
+                easing: Easing.inOut(Easing.cubic),
+            }
+
+            timing(clock, config).start()
+        }
+    })
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height }}>
@@ -45,7 +67,7 @@ export const BlurOverlay = (props: {
                 visible={visible}
                 viewType={reallyVisible ? "background" : null}
             />
-            <Reanimated.View style={{ backgroundColor: "transparent", opacity: props.animate, position: "absolute", top: 0, left: 0,  width, height }}>
+            <Reanimated.View style={{ backgroundColor: "transparent", opacity: opacity.current, position: "absolute", top: 0, left: 0,  width, height }}>
                 <RCTBlurView
                     style={{ width, height }}
                     radius={props.radius}
