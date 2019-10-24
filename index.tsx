@@ -12,7 +12,7 @@ const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementCon
 }>
 
 export const BlurOverlay = (props: {
-    style: StyleSheet
+    style?: StyleSheet
     radius: number
     sampling: number
     visible: boolean
