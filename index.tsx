@@ -48,15 +48,13 @@ export const BlurOverlay = (props: {
 
             console.log(`starting animation`)
 
-            const clock = new Clock()
-
             const config = {
                 toValue: new Value(1),
                 duration: 300,
                 easing: Easing.inOut(Easing.cubic),
             }
 
-            timing(clock, config).start()
+            timing(reallyVisibleOpacity.current, config).start()
         }
     },[visible])
 
