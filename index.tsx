@@ -83,7 +83,7 @@ export const BlurOverlay = (props: {
                     width: "100%",
                     height: "110%",
                     backgroundColor: props.overlayColor,
-                    opacity: opacity.current,
+                    opacity: props.animate,
                 }, props.style]}
             >
                 { reallyVisible ? props.children : null }
