@@ -18,7 +18,6 @@ export const BlurOverlay = (props: {
     sampling: number
     children ?: React.ReactNode
     animate: Reanimated.Node<number>
-    overlayColor: string
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
