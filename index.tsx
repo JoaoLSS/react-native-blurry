@@ -26,6 +26,10 @@ export const BlurOverlay = (props: {
 
     useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove, [])
 
+    useEffect(() => {
+        console.log(`effect`)
+    },[BlurOverlay.visible])
+
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
             <RCTBlurView
