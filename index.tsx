@@ -41,7 +41,7 @@ export const BlurOverlay = (props: {
         console.log({ opacity })
 
         if(anim && !visible) setVisible(true)
-        if(!anim) {
+        if(!anim && opacity) {
             setVisible(false)
             reallyVisibleOpacity.current.setValue(0)
         }
