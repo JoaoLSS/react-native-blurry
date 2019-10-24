@@ -42,7 +42,7 @@ export const BlurOverlay = (props: {
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
                 sampling={props.sampling}
-                visible={props.visible}
+                visible={visible}
                 viewType={reallyVisible ? "background" : null}
             />
             <Reanimated.View style={{ opacity: props.animate, position: "absolute", top: 0, left: 0 }}>
@@ -50,7 +50,7 @@ export const BlurOverlay = (props: {
                     style={{ width, height }}
                     radius={props.radius}
                     sampling={props.sampling}
-                    visible={props.visible}
+                    visible={visible}
                     viewType={reallyVisible ? "blur" : null}
                 />
             </Reanimated.View>
