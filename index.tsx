@@ -21,14 +21,19 @@ export const BlurOverlay = (props: {
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
-
+    const [visible, setVisible] = useState(props.visible)
     const { width, height } = Dimensions.get("window")
 
-    useEffect(() => NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove, [])
 
     useEffect(() => {
-        console.log(`effect`)
-    },[BlurOverlay.visible])
+        BlurOverlay.setVisible = (v: boolean) => {
+            console.log(`state`)
+            setVisible(v)
+        }
+        return NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove
+    }, [])
+
+    useEffect(() => setVisible(props.visible),[props.visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
@@ -36,7 +41,7 @@ export const BlurOverlay = (props: {
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
                 sampling={props.sampling}
-                visible={props.visible || BlurOverlay.visible}
+                visible={props.visible}
                 viewType={reallyVisible ? "background" : null}
             />
             <Reanimated.View style={{ opacity: props.animate, position: "absolute", top: 0, left: 0 }}>
@@ -44,7 +49,7 @@ export const BlurOverlay = (props: {
                     style={{ width, height }}
                     radius={props.radius}
                     sampling={props.sampling}
-                    visible={props.visible || BlurOverlay.visible}
+                    visible={props.visible}
                     viewType={reallyVisible ? "blur" : null}
                 />
             </Reanimated.View>
@@ -54,10 +59,5 @@ export const BlurOverlay = (props: {
 
 }
 
-BlurOverlay.visible = false
-BlurOverlay.setVisible = (v: boolean) => {
-    console.log(`setVisible`, v)
-    BlurOverlay.visible = v
-    console.log({ setted: BlurOverlay.visible })
-}
+BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
