@@ -49,19 +49,19 @@ export const BlurOverlay = (props: {
     }), [props.animate, reallyVisibleOpacity.current])
 
     useEffect(() => {
-        if(visible) {
+        if(reallyVisible) {
 
             console.log(`starting animation`)
 
             const config = {
                 toValue: new Value(1),
-                duration: 1000,
+                duration: 300,
                 easing: Easing.inOut(Easing.cubic),
             }
 
             timing(reallyVisibleOpacity.current, config).start()
         }
-    },[visible])
+    },[reallyVisible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height }}>
