@@ -26,17 +26,15 @@ export const BlurOverlay = (props: {
 
 
     useEffect(() => {
-        console.log(`first effect`)
-        BlurOverlay.setVisible = (v: boolean) => {
-            console.log(`state`)
-            setVisible(v)
+        BlurOverlay.setVisible = setVisible
+        const subs = NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible)
+        return () => {
+            BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
+            subs.remove()
         }
-        return NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible).remove
     }, [])
 
     useEffect(() => setVisible(props.visible),[props.visible])
-
-    useEffect(() => console.log({ visible }), [visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
