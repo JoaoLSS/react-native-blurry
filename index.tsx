@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View } from 'react-native'
+import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle } from 'react-native'
 import Reanimated from "react-native-reanimated"
 
 
@@ -12,7 +12,7 @@ const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementCon
 }>
 
 export const BlurOverlay = (props: {
-    style?: StyleSheet
+    style?: StyleProp<ViewStyle>
     radius: number
     sampling: number
     visible: boolean
@@ -37,7 +37,7 @@ export const BlurOverlay = (props: {
     useEffect(() => setVisible(props.visible),[props.visible])
 
     return (
-        <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
+        <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height }}>
             <RCTBlurView
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
@@ -45,7 +45,7 @@ export const BlurOverlay = (props: {
                 visible={visible}
                 viewType={reallyVisible ? "background" : null}
             />
-            <Reanimated.View style={{ backgroundColor: "transparent", opacity: props.animate, position: "absolute", top: 0, left: 0 }}>
+            <Reanimated.View style={{ backgroundColor: "transparent", opacity: props.animate, position: "absolute", top: 0, left: 0,  width, height }}>
                 <RCTBlurView
                     style={{ width, height }}
                     radius={props.radius}
@@ -54,7 +54,9 @@ export const BlurOverlay = (props: {
                     viewType={reallyVisible ? "blur" : null}
                 />
             </Reanimated.View>
-            { reallyVisible ? props.children : null }
+            <View style={[{ flex: 1 }, props.style]}>
+                {props.children}
+            </View>
         </View>
     )
 
