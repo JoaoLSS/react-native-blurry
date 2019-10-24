@@ -46,6 +46,8 @@ export const BlurOverlay = (props: {
     useEffect(() => {
         if(visible) {
 
+            console.log(`starting animation`)
+
             const clock = new Clock()
 
             const config = {
@@ -56,7 +58,7 @@ export const BlurOverlay = (props: {
 
             timing(clock, config).start()
         }
-    })
+    },[visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height }}>
