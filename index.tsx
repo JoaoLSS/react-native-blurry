@@ -38,8 +38,6 @@ export const BlurOverlay = (props: {
 
     useCode(call([props.animate, reallyVisibleOpacity.current],([anim, opacity]) => {
 
-        console.log({ opacity })
-
         if(anim && !visible) setVisible(true)
         if(!anim && opacity) {
             setVisible(false)
@@ -50,8 +48,6 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
         if(reallyVisible) {
-
-            console.log(`starting animation`)
 
             const config = {
                 toValue: new Value(1),
