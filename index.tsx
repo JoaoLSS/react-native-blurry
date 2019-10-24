@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle, Animated } from 'react-native'
 import Reanimated, { Easing } from "react-native-reanimated"
+import { number } from "prop-types"
 
 const { useCode, call, min, Value, timing, Clock } = Reanimated
 
@@ -29,6 +30,7 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
         BlurOverlay.setVisible = setVisible
+        BlurOverlay.realProgress = opacity.current
         const subs = NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible)
         return () => {
             BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
@@ -97,3 +99,4 @@ export const BlurOverlay = (props: {
 
 BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
+BlurOverlay.realProgress = new Reanimated.Node<number>({})
