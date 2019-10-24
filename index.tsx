@@ -77,15 +77,19 @@ export const BlurOverlay = (props: {
                     viewType={reallyVisible ? "blur" : null}
                 />
             </Reanimated.View>
-            <Reanimated.View
-                style={[{
-                    width: "100%",
-                    height: "110%",
-                    opacity: props.animate,
-                }, props.style]}
-            >
-                { props.children }
-            </Reanimated.View>
+            {
+                reallyVisible ?
+                <Reanimated.View
+                    style={[{
+                        width: "100%",
+                        height: "110%",
+                        opacity: props.animate,
+                    }, props.style]}
+                >
+                    { props.children }
+                </Reanimated.View>
+                : null
+            }
         </View>
     )
 
