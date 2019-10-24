@@ -36,6 +36,8 @@ export const BlurOverlay = (props: {
 
     useEffect(() => setVisible(props.visible),[props.visible])
 
+    useEffect(() => console.log({ visible }), [visible])
+
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, ...props.style }}>
             <RCTBlurView
