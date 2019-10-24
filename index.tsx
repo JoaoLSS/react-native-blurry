@@ -19,6 +19,7 @@ export const BlurOverlay = (props: {
     sampling: number
     children ?: React.ReactNode
     animate: Reanimated.Node<number>
+    minDuration: number
 }) => {
 
     const [reallyVisible, setReallyVisible] = useState(false)
@@ -54,7 +55,7 @@ export const BlurOverlay = (props: {
 
             const config = {
                 toValue: new Value(1),
-                duration: 300,
+                duration: props.minDuration,
                 easing: Easing.inOut(Easing.cubic),
             }
 
