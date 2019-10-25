@@ -52,8 +52,6 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
 
-        BlurOverlay._listeners.forEach(listener => listener(reallyVisible ? "didAppear" : visible ? "shouldAppear" : "shouldDisappear"))
-
         if(reallyVisible) {
 
             const config = {
@@ -64,6 +62,9 @@ export const BlurOverlay = (props: {
 
             timing(reallyVisibleOpacity.current, config).start()
         }
+
+        BlurOverlay._listeners.forEach(listener => listener(reallyVisible ? "didAppear" : visible ? "shouldAppear" : "shouldDisappear"))
+
     },[reallyVisible, visible])
 
     return (
