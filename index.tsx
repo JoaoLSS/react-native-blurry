@@ -24,7 +24,7 @@ export const BlurOverlay = (props: {
 
     const [reallyVisible, setReallyVisible] = useState(false)
     const [visible, setVisible] = useState(false)
-    const [listeners, addListener] = useState<((visible: boolean) => void)[]>([])
+    const [listeners, addListener] = useState<((status: "shouldAppear" | "didAppear" | "shouldDisappear") => void)[]>([])
     const { width, height } = Dimensions.get("window")
 
     const reallyVisibleOpacity = useRef(new Value(0))
@@ -33,12 +33,12 @@ export const BlurOverlay = (props: {
     useEffect(() => {
         BlurOverlay.setVisible = setVisible
         BlurOverlay.realProgress = opacity.current
-        BlurOverlay.addVisibleListener = (listener) => addListener(_listeners => [..._listeners, listener])
+        BlurOverlay.addListener = (listener) => addListener(_listeners => [..._listeners, listener])
         const subs = NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible)
         return () => {
             BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
             BlurOverlay.realProgress = new Reanimated.Value(0)
-            BlurOverlay.addVisibleListener = () => {}
+            BlurOverlay.addListener = () => {}
             subs.remove()
         }
     }, [])
@@ -55,7 +55,7 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
 
-        listeners.forEach(listener => listener(reallyVisible))
+        listeners.forEach(listener => listener(reallyVisible ? "didAppear" : visible ? "shouldAppear" : "shouldDisappear"))
 
         if(reallyVisible) {
 
@@ -67,7 +67,7 @@ export const BlurOverlay = (props: {
 
             timing(reallyVisibleOpacity.current, config).start()
         }
-    },[reallyVisible])
+    },[reallyVisible, visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height }}>
@@ -105,7 +105,7 @@ export const BlurOverlay = (props: {
 
 }
 
-BlurOverlay.addVisibleListener = (listener: (visible: boolean) => void) => {}
+BlurOverlay.addListener = (listener: (status: "shouldAppear" | "didAppear" | "shouldDisappear") => void) => {}
 BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
 BlurOverlay.realProgress = new Reanimated.Value(0) as Reanimated.Node<number>
