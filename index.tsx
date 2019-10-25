@@ -24,6 +24,7 @@ export const BlurOverlay = (props: {
 
     const [reallyVisible, setReallyVisible] = useState(false)
     const [visible, setVisible] = useState(false)
+    const [listeners, addListener] = useState<((visible: boolean) => void)[]>([])
     const { width, height } = Dimensions.get("window")
 
     const reallyVisibleOpacity = useRef(new Value(0))
@@ -32,10 +33,12 @@ export const BlurOverlay = (props: {
     useEffect(() => {
         BlurOverlay.setVisible = setVisible
         BlurOverlay.realProgress = opacity.current
+        BlurOverlay.addVisibleListener = (listener) => addListener(_listeners => [..._listeners, listener])
         const subs = NativeAppEventEmitter.addListener("RNBLURRY", setReallyVisible)
         return () => {
             BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
             BlurOverlay.realProgress = new Reanimated.Value(0)
+            BlurOverlay.addVisibleListener = () => {}
             subs.remove()
         }
     }, [])
@@ -51,6 +54,9 @@ export const BlurOverlay = (props: {
     }), [props.animate, reallyVisibleOpacity.current])
 
     useEffect(() => {
+
+        listeners.forEach(listener => listener(reallyVisible))
+
         if(reallyVisible) {
 
             const config = {
@@ -99,6 +105,7 @@ export const BlurOverlay = (props: {
 
 }
 
+BlurOverlay.addVisibleListener = (listener: (visible: boolean) => void) => {}
 BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
 BlurOverlay.realProgress = new Reanimated.Value(0) as Reanimated.Node<number>
