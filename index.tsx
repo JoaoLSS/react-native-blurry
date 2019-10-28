@@ -145,9 +145,10 @@ export const BlurIncludeView: React.FunctionComponent = (props: { children ?: Re
         switch(status) {
             case "shouldAppear":
                 setZ(10000)
+                setTimeout(() => setZ(0), 0)
                 break
-            default:
-                setZ(0)
+            // default:
+            //     setZ(0)
         }
 
     }),[])
