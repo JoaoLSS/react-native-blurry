@@ -40,11 +40,11 @@ export const BlurOverlay = (props: {
     useEffect(() => {
         if(shouldAppear) {
             BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
-            setTimeout(() => setVisible(true),10)
+            setTimeout(() => setVisible(true))
         }
         else {
             BlurOverlay._listeners.forEach(listener => listener("shouldDisappear"))
-            setTimeout(() => setVisible(false),10)
+            setTimeout(() => setVisible(false))
         }
     },[shouldAppear])
 
@@ -145,10 +145,9 @@ export const BlurIncludeView: React.FunctionComponent = (props: { children ?: Re
         switch(status) {
             case "shouldAppear":
                 setZ(10000)
-                setTimeout(() => setZ(0), 0)
                 break
-            // default:
-            //     setZ(0)
+            default:
+                setZ(0)
         }
 
     }),[])
