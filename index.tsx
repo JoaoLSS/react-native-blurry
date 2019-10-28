@@ -130,11 +130,7 @@ export const BlurExcludeView = (props: { children ?: React.ReactNode, style?: St
 
     return (
         <View
-            style={[{ zIndex, position: "absolute", width, height },props.style]}
-            onStartShouldSetResponder={() => false}
-            onMoveShouldSetResponder={() => false}
-            onMoveShouldSetResponderCapture={() => false}
-            onStartShouldSetResponderCapture={() => false}
+            style={[{ zIndex, position: "absolute" },props.style]}
         >
             { props.children }
         </View>
@@ -161,10 +157,6 @@ export const BlurIncludeView = (props: { children ?: React.ReactNode, style?: St
     return(
         <View
             style={[{ zIndex, position: "absolute", width, height },props.style]}
-            onStartShouldSetResponder={() => false}
-            onMoveShouldSetResponder={() => false}
-            onMoveShouldSetResponderCapture={() => false}
-            onStartShouldSetResponderCapture={() => false}
         >
             { props.children }
         </View>
