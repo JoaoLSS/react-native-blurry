@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useCallback } from "react"
 import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle, Animated } from 'react-native'
 
 // const { useCode, call, min, Value, timing, Clock } = Reanimated
@@ -38,11 +38,15 @@ export const BlurOverlay = (props: {
         }
     }, [])
 
+    const listen = useCallback(() => {
+        if(visible) BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
+    },[])
+
     useEffect(() => {
 
         const subs = props.animate.addListener(function ({ value }) {
             console.log({ value, visible })
-            if(value && !visible) BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
+            if(value) listen()
             setVisible(!!value)
         })
         return () => { props.animate.removeListener(subs) }
