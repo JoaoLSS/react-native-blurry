@@ -22,6 +22,7 @@ export const BlurOverlay = (props: {
 
     const [reallyVisible, setReallyVisible] = useState(false)
     const [visible, setVisible] = useState(false)
+    const [shouldAppear, setShouldAppear] = useState(false)
     const { width, height } = Dimensions.get("window")
 
     const reallyVisibleOpacity = useRef(new Animated.Value(0))
@@ -39,15 +40,18 @@ export const BlurOverlay = (props: {
     }, [])
 
     const listen = useCallback(() => {
-        if(visible) BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
-    },[])
+        if(shouldAppear) {
+            BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
+            setVisible(true)
+        }
+        else setVisible(false)
+    },[shouldAppear])
 
     useEffect(() => {
 
         const subs = props.animate.addListener(function ({ value }) {
             console.log({ value, visible })
-            if(value) listen()
-            setVisible(!!value)
+            if(value) setShouldAppear(true)
         })
         return () => { props.animate.removeListener(subs) }
 
