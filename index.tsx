@@ -40,12 +40,17 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
 
-        const subs = props.animate.addListener(({ value }) => setVisible(!!value))
+        const subs = props.animate.addListener(({ value }) => {
+            console.log({ value })
+            setVisible(!!value)
+        })
         return () => { props.animate.removeListener(subs) }
 
     },[])
 
     useEffect(() => {
+
+        console.log({ visible, reallyVisible })
 
         if(reallyVisible) {
             Animated.timing(reallyVisibleOpacity.current, { toValue: 1, duration: props.minDuration }).start()
@@ -53,7 +58,7 @@ export const BlurOverlay = (props: {
 
         BlurOverlay._listeners.forEach(listener => listener(reallyVisible ? "didAppear" : visible ? "shouldAppear" : "shouldDisappear" ))
 
-    },[reallyVisible])
+    },[reallyVisible, visible])
 
     return (
         <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: 9000 }}>
