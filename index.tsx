@@ -130,8 +130,8 @@ export const BlurExcludeView = (props: { children ?: React.ReactNode, style?: St
 
     return (
         <View
-            style={[{ zIndex, position: "absolute" },props.style]}
-            pointerEvents="none"
+            style={[{ zIndex, position: "absolute", width, height },props.style]}
+            pointerEvents="box-none"
         >
             { props.children }
         </View>
