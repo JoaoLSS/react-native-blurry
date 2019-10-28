@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { requireNativeComponent, ViewProps, Dimensions, NativeAppEventEmitter, View, StyleProp, ViewStyle, Animated } from 'react-native'
-
-// const { useCode, call, min, Value, timing, Clock } = Reanimated
 
 const RCTBlurView = requireNativeComponent("RCTBlurView") as React.JSXElementConstructor<ViewProps & {
     radius: number,
