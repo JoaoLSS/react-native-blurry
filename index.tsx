@@ -44,7 +44,10 @@ export const BlurOverlay = (props: {
             BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
             setTimeout(() => setVisible(true),0)
         }
-        else setVisible(false)
+        else {
+            BlurOverlay._listeners.forEach(listener => listener("shouldDisappear"))
+            setTimeout(() => setVisible(false),0)
+        }
     },[shouldAppear])
 
     useEffect(() => {
@@ -61,12 +64,12 @@ export const BlurOverlay = (props: {
 
         console.log({ visible, reallyVisible, opacity: opacity.current })
 
-        if(reallyVisible) {
+        if(reallyVisible)
             Animated.timing(reallyVisibleOpacity.current, { toValue: 1, duration: props.minDuration }).start()
-        }
+        if(!visible)
+            reallyVisibleOpacity.current.setValue(0)
 
         if(visible && reallyVisible) BlurOverlay._listeners.forEach(listener => listener("didAppear"))
-        if(!visible && !reallyVisible) BlurOverlay._listeners.forEach(listener => listener("shouldDisappear"))
 
     },[reallyVisible, visible])
 
