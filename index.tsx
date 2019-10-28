@@ -113,7 +113,7 @@ BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
 BlurOverlay.realProgress = new Animated.Value(0) as Animated.Animated
 
-export const BlurExcludeView: React.FunctionComponent = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
+export const BlurExcludeView = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
 
     const { width, height } = Dimensions.get("window")
 
@@ -135,7 +135,7 @@ export const BlurExcludeView: React.FunctionComponent = (props: { children ?: Re
     )
 }
 
-export const BlurIncludeView: React.FunctionComponent = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
+export const BlurIncludeView = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
 
     const { width, height } = Dimensions.get("window")
 
