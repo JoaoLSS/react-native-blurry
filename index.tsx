@@ -50,7 +50,7 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
 
-        console.log({ visible, reallyVisible })
+        console.log({ visible, reallyVisible, opacity: opacity.current._value })
 
         if(reallyVisible) {
             Animated.timing(reallyVisibleOpacity.current, { toValue: 1, duration: props.minDuration }).start()
