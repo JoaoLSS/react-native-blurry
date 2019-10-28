@@ -51,7 +51,7 @@ export const BlurOverlay = (props: {
 
         const subs = props.animate.addListener(function ({ value }) {
             console.log({ value, visible })
-            if(value) setShouldAppear(true)
+            setShouldAppear(!!value)
         })
         return () => { props.animate.removeListener(subs) }
 
