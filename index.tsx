@@ -65,7 +65,7 @@ export const BlurOverlay = (props: {
             Animated.timing(reallyVisibleOpacity.current, { toValue: 1, duration: props.minDuration }).start()
         }
 
-        BlurOverlay._listeners.forEach(listener => listener(reallyVisible ? "didAppear" : "shouldDisappear" ))
+        if(visible) BlurOverlay._listeners.forEach(listener => listener(reallyVisible ? "didAppear" : "shouldDisappear" ))
 
     },[reallyVisible, visible])
 
