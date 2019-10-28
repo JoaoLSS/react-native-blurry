@@ -25,7 +25,7 @@ export const BlurOverlay = (props: {
     const { width, height } = Dimensions.get("window")
 
     const reallyVisibleOpacity = useRef(new Animated.Value(0))
-    const opacity = useRef(Animated.divide(Animated.multiply(props.animate, reallyVisibleOpacity.current), new Animated.Value(2)))
+    const opacity = useRef(Animated.multiply(props.animate, reallyVisibleOpacity.current))
 
     useEffect(() => {
         BlurOverlay.setVisible = setVisible
@@ -50,7 +50,7 @@ export const BlurOverlay = (props: {
 
     useEffect(() => {
 
-        console.log({ visible, reallyVisible, opacity: opacity.current._value })
+        console.log({ visible, reallyVisible, opacity: opacity.current })
 
         if(reallyVisible) {
             Animated.timing(reallyVisibleOpacity.current, { toValue: 1, duration: props.minDuration }).start()
