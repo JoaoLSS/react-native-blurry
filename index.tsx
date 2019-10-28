@@ -121,7 +121,7 @@ export const BlurExcludeView = (props: { children ?: React.ReactNode, style?: St
     useEffect(() => BlurOverlay.addListener((status) => {
             switch(status) {
                 case "shouldAppear":
-                    setZ(0)
+                    setZ(1)
                     break
                 default:
                     setZ(10000)
@@ -142,7 +142,7 @@ export const BlurIncludeView = (props: { children ?: React.ReactNode, style?: St
 
     const { width, height } = Dimensions.get("window")
 
-    const [zIndex, setZ] = useState(0)
+    const [zIndex, setZ] = useState(1)
     useEffect(() => BlurOverlay.addListener((status) => {
 
         switch(status) {
@@ -150,7 +150,7 @@ export const BlurIncludeView = (props: { children ?: React.ReactNode, style?: St
                 setZ(10000)
                 break
             default:
-                setZ(0)
+                setZ(1)
         }
 
     }),[])
