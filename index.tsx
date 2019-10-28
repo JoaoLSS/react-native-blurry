@@ -102,7 +102,9 @@ BlurOverlay.setVisible = (v: boolean) => console.log(`setVisible`, v)
 BlurOverlay.onBlurReady = (cb: (ready: boolean) => void) => NativeAppEventEmitter.addListener("RNBLURRY", cb)
 BlurOverlay.realProgress = new Animated.Value(0) as Animated.Animated
 
-export const BlurExcludeView: React.FunctionComponent = (props: { children, style }) => {
+export const BlurExcludeView: React.FunctionComponent = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
+
+    const { width, height } = Dimensions.get("window")
 
     const [zIndex, setZ] = useState(10000)
     useEffect(() => BlurOverlay.addListener((status) => {
@@ -116,13 +118,15 @@ export const BlurExcludeView: React.FunctionComponent = (props: { children, styl
         }),[])
 
     return (
-        <View style={[{ zIndex },props.style]}>
+        <View style={[{ zIndex, position: "absolute", width, height },props.style]}>
             { props.children }
         </View>
     )
 }
 
-export const BlurIncludeView: React.FunctionComponent = (props: { children, style }) => {
+export const BlurIncludeView: React.FunctionComponent = (props: { children ?: React.ReactNode, style?: StyleProp<ViewStyle> }) => {
+
+    const { width, height } = Dimensions.get("window")
 
     const [zIndex, setZ] = useState(0)
     useEffect(() => BlurOverlay.addListener((status) => {
@@ -138,7 +142,7 @@ export const BlurIncludeView: React.FunctionComponent = (props: { children, styl
     }),[])
 
     return(
-        <View style={[{ zIndex },props.style]}>
+        <View style={[{ zIndex, position: "absolute", width, height },props.style]}>
             { props.children }
         </View>
     )
