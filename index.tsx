@@ -117,8 +117,8 @@ export const BlurExcludeView: React.FunctionComponent = (props: { children ?: Re
                 case "shouldAppear":
                     setZ(0)
                     break
-                default:
-                    setZ(10000)
+                // default:
+                //     setZ(10000)
             }
         }),[])
 
