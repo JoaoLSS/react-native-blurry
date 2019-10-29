@@ -68,9 +68,8 @@ export const BlurOverlay = (props: {
     },[reallyVisible, visible])
 
     return (
-        <View pointerEvents="box-none" style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: visible ? 9000 : 0 }}>
+        <View style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: visible ? 9000 : 0 }}>
             <RCTBlurView
-                pointerEvents="box-none" 
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
                 sampling={props.sampling}
@@ -79,7 +78,6 @@ export const BlurOverlay = (props: {
             />
             <Animated.View style={{ backgroundColor: "transparent", opacity: opacity.current, position: "absolute", top: 0, left: 0,  width, height }}>
                 <RCTBlurView
-                    pointerEvents="box-none" 
                     style={{ width, height }}
                     radius={props.radius}
                     sampling={props.sampling}
@@ -132,10 +130,7 @@ export const BlurExcludeView = (props: { children ?: React.ReactNode, style?: St
         }),[])
 
     return (
-        <View
-            style={[{ zIndex, position: "absolute", width, height },props.style]}
-            pointerEvents={"box-none"}
-        >
+        <View style={[{ zIndex, position: "absolute", width, height },props.style]}>
             { props.children }
         </View>
     )
@@ -159,10 +154,7 @@ export const BlurIncludeView = (props: { children ?: React.ReactNode, style?: St
     }),[])
 
     return(
-        <View
-            style={[{ zIndex, position: "absolute", width, height },props.style]}
-            pointerEvents={"box-none"}
-        >
+        <View style={[{ zIndex, position: "absolute", width, height },props.style]}>
             { props.children }
         </View>
     )
