@@ -38,6 +38,7 @@ export const BlurOverlay = (props: {
     }, [])
 
     useEffect(() => {
+        console.log(`should appear?`)
         if(shouldAppear) {
             BlurOverlay._listeners.forEach(listener => listener("shouldAppear"))
             setTimeout(() => setVisible(true))
