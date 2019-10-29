@@ -67,7 +67,7 @@ export const BlurOverlay = (props: {
     },[reallyVisible, visible])
 
     return (
-        <View pointerEvents="box-none" style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: reallyVisible ? 9000 : -1 }}>
+        <View pointerEvents="box-none" style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: visible ? 9000 : -1 }}>
             <RCTBlurView
                 pointerEvents="box-none" 
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
