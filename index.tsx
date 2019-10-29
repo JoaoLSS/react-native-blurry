@@ -69,6 +69,7 @@ export const BlurOverlay = (props: {
     return (
         <View pointerEvents="box-none" style={{ backgroundColor: "transparent", position: "absolute", top: 0, left: 0, width, height, zIndex: 9000 }}>
             <RCTBlurView
+                pointerEvents="box-none" 
                 style={{ position: "absolute", top: 0, left: 0, width, height }}
                 radius={props.radius}
                 sampling={props.sampling}
@@ -77,6 +78,7 @@ export const BlurOverlay = (props: {
             />
             <Animated.View style={{ backgroundColor: "transparent", opacity: opacity.current, position: "absolute", top: 0, left: 0,  width, height }}>
                 <RCTBlurView
+                    pointerEvents="box-none" 
                     style={{ width, height }}
                     radius={props.radius}
                     sampling={props.sampling}
